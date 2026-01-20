@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-    <title>thegail</title>
+    <title>Teddy's photostream</title>
     <link rel="apple-touch-icon" href={favicon} />
     <link rel="icon" type="image/png" href={favicon} />
     <link rel="mask-icon" href={favicon} color="#202020" />
@@ -21,9 +21,21 @@
     <meta name="theme-color" content={isDarkMode ? "#202020" : "#D0D0D0"} />
 </svelte:head>
 
+<header>
+    <h1>Teddy&rsquo;s photostream</h1>
+</header>
+
 {@render children()}
 
 <style>
+    header {
+        width: 60%;
+    }
+
+    h1 {
+        font-family: "DM Serif Display", serif;
+    }
+
     :global(*) {
         color: var(--secondary);
         font-family: Lato, Helvetica, sans-serif;
@@ -45,6 +57,19 @@
     :global(html) {
         width: 100%;
         height: 100%;
+    }
+
+    :global(button) {
+        background: var(--secondary);
+        color: var(--primary);
+        font-size: 0.8em;
+        border: none;
+        border-radius: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        cursor: pointer;
     }
 
     @media (prefers-color-scheme: light) {
