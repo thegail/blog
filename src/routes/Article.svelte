@@ -27,10 +27,14 @@
             return;
         }
         article.comments.push({ user: me, text: comment });
-        await fetch(`/comment/${article._id}`, {
+        let response = await fetch(`/comment/${article._id}`, {
             method: "POST",
             body: comment,
         });
+        if (!response.ok) {
+            let text = await response.text();
+            alert(text);
+        }
         comment = "";
     }
 

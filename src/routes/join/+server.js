@@ -15,7 +15,7 @@ export async function POST({ request, cookies }) {
     { $set: { used: true } },
   );
   if (result.matchedCount == 0) {
-    // throw new Error("Nope");
+    // error(404, "Invalid join link");;
   }
   let id = crypto.getRandomValues(new Uint8Array(32)).toHex();
   let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
@@ -34,7 +34,7 @@ export async function PUT({ request, cookies }) {
   let body = await request.json();
   let user = await users.findOne({ _id: body.id });
   if (!user.challenge) {
-    throw new Error("Nope");
+    error(400, "Missing challenge");
   }
   let verification = await verifyRegistrationResponse({
     response: body.credential,
@@ -45,7 +45,7 @@ export async function PUT({ request, cookies }) {
     expectedRPID: "localhost",
   });
   if (!verification.verified) {
-    throw new Error("Nope");
+    error(401, "Verification failed");
   }
   let token = crypto.getRandomValues(new Uint8Array(32)).toHex();
   cookies.set("token", token, { path: "/" });

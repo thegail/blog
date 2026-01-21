@@ -1,6 +1,7 @@
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
 import { MongoClient } from "mongodb";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
+import { error } from "@sveltejs/kit";
 
 let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
@@ -16,7 +17,7 @@ export async function POST({ request, cookies }) {
     { $set: { challenge: challenge } },
   );
   if (result.matchedCount === 0) {
-    throw new Error("Nope");
+    error(404, "Unknown user ID");
   }
   return new Response(JSON.stringify({ challenge }));
 }
@@ -37,7 +38,7 @@ export async function PUT({ request, cookies }) {
     },
   });
   if (!verification.verified) {
-    throw new Error("Nope");
+    error(401, "Verification failed");
   }
   let token = crypto.getRandomValues(new Uint8Array(32)).toHex();
   await users.updateOne(

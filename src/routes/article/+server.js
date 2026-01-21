@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { error } from "@sveltejs/kit";
 
 let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
@@ -11,7 +12,7 @@ export async function POST({ request }) {
       "$argon2id$v=19$m=65536,t=2,p=1$4xQKNEIPfS0wykKUOHvhKGkYbP0hOIEo6Nl//Y71bno$MkaXsKk6rluFaqD43jqZRLkgJVGqhAuq0hn1L5pdMsE",
     )
   ) {
-    throw new Error("Nope");
+    error(401, "Unauthorized");
   }
   let body = await request.json();
   let id = crypto.getRandomValues(new Uint8Array(4)).toHex();

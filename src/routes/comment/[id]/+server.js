@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { error } from "@sveltejs/kit";
 
 let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
@@ -8,11 +9,12 @@ let articles = db.collection("articles");
 export async function POST({ request, cookies, params }) {
   let text = await request.text();
   let user = await users.findOne({ _id: cookies.get("userId") });
-  if (!user || !user.tokens.includes(Bun.sha(cookies.get("token")).toHex())) {
-    throw new Error("Nope");
+  let token = cookies.get("token");
+  if (!user || !token || !user.tokens.includes(Bun.sha(token).toHex())) {
+    error(401, "Unauthorized");
   }
   if (text.length > 2000) {
-    throw new Error("Nope");
+    error(400, "Text too long");
   }
   await articles.updateOne(
     { _id: params.id },
