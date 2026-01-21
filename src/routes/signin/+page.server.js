@@ -5,9 +5,7 @@ export async function load({ cookies }) {
   let users = db.collection("users");
 
   let id = cookies.get("userId");
-  let challenge = Buffer.from(
-    crypto.getRandomValues(new Uint8Array(32)),
-  ;
+  let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
   let result = await users.updateOne(
     { _id: id },
     { $set: { challenge: challenge } },

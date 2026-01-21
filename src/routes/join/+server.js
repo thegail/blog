@@ -9,7 +9,7 @@ export async function POST({ request, cookies }) {
   let users = db.collection("users");
 
   let body = await request.json();
-  let hash = Buffer.from(Bun.sha(body.code);
+  let hash = Bun.sha(body.code).toHex();
   let result = await codes.updateOne(
     { _id: hash, used: false },
     { $set: { used: true } },
@@ -17,12 +17,8 @@ export async function POST({ request, cookies }) {
   if (result.matchedCount == 0) {
     error(404, "Invalid join link");
   }
-  let id = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString(
-    "hex",
-  );
-  let challenge = Buffer.from(
-    crypto.getRandomValues(new Uint8Array(32)),
-  ;
+  let id = crypto.getRandomValues(new Uint8Array(32)).toHex();
+  let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
   await users.insertOne({
     _id: id,
     name: body.name,
@@ -55,23 +51,19 @@ export async function PUT({ request, cookies }) {
   if (!verification.verified) {
     error(401, "Verification failed");
   }
-  let token = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString(
-    "hex",
-  );
+  let token = crypto.getRandomValues(new Uint8Array(32)).toHex();
   cookies.set("token", token, { path: "/" });
   await users.updateOne(
     { _id: body.id },
     {
       $set: {
-        publicKey: Buffer.from(
-          verification.registrationInfo.credential.publicKey,
-        ,
+        publicKey: verification.registrationInfo.credential.publicKey.toHex(),
         counter: verification.registrationInfo.credential.counter,
         credentialId: verification.registrationInfo.credential.id,
         challenge: null,
       },
       $push: {
-        tokens: Buffer.from(Bun.sha(token),
+        tokens: Bun.sha(token).toHex(),
       },
     },
   );

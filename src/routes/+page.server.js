@@ -10,11 +10,7 @@ export async function load({ request, cookies }) {
 
   let user = await users.findOne({ _id: cookies.get("userId") });
   let token = cookies.get("token");
-  if (
-    !user ||
-    !token ||
-    !user.tokens.includes(Buffer.from(Bun.sha(token))
-  ) {
+  if (!user || !token || !user.tokens.includes(Bun.sha(token).toHex())) {
     redirect(307, "/signin");
   }
   let allArticles = await articles.find().sort({ date: -1 }).toArray();
