@@ -11,11 +11,11 @@ export async function POST({ request, cookies }) {
   let body = await request.json();
   let hash = Bun.sha(body.code);
   let result = await codes.updateOne(
-    { hash, used: false },
+    { _id: hash, used: false },
     { $set: { used: true } },
   );
   if (result.matchedCount == 0) {
-    // error(404, "Invalid join link");;
+    error(404, "Invalid join link");
   }
   let id = crypto.getRandomValues(new Uint8Array(32)).toHex();
   let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
