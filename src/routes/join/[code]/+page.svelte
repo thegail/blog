@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { page } from "$app/state";
+    import { goto } from "$app/navigation";
 
     let name = $state("");
 
@@ -38,7 +39,7 @@
                 credential: credential,
             }),
         });
-        window.location = "/";
+        goto("/");
     }
 </script>
 

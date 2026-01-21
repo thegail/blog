@@ -15,5 +15,5 @@ export async function load({ request, cookies }) {
   let allUsers = Object.fromEntries(
     (await users.find().toArray()).map((u) => [u._id, u.name]),
   );
-  return { articles: allArticles, users: allUsers };
+  return { articles: allArticles, users: allUsers, me: user._id };
 }

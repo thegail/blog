@@ -24,7 +24,11 @@
 
 <main>
     {#each articles as article, index}
-        <Article bind:article={articles[index]} users={data.users} />
+        <Article
+            bind:article={articles[index]}
+            users={data.users}
+            me={data.me}
+        />
         {#if index < articles.length - 1}
             <hr />
         {/if}
@@ -33,8 +37,11 @@
 
 <style>
     main {
-        overflow-y: scroll;
         padding-bottom: 20px;
+    }
+
+    :global(body) {
+        overflow-y: scroll;
     }
 
     hr {

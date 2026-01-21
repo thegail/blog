@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     let { data } = $props();
 
@@ -22,10 +23,8 @@
                     body: JSON.stringify({ id: userId }),
                 })
             ).json();
-            console.log(response);
             challenge = response.challenge;
         }
-        console.log(challenge);
         let credential = await navigator.credentials.get({
             mediation: "silent",
             publicKey: {
@@ -37,7 +36,7 @@
             method: "PUT",
             body: JSON.stringify({ credential }),
         });
-        window.location = "/";
+        goto("/");
     }
 </script>
 
