@@ -8,6 +8,21 @@ let users = db.collection("users");
 
 export async function POST({ request, cookies }) {
   let body = await request.json();
+  let id = body.id;
+  cookies.set("userId", id, { path: "/" });
+  let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
+  let result = await users.updateOne(
+    { _id: id },
+    { $set: { challenge: challenge } },
+  );
+  if (result.matchedCount === 0) {
+    throw new Error("Nope");
+  }
+  return new Response(JSON.stringify({ challenge }));
+}
+
+export async function PUT({ request, cookies }) {
+  let body = await request.json();
   let user = await users.findOne({ _id: cookies.get("userId") });
   let verification = await verifyAuthenticationResponse({
     response: body.credential,

@@ -24,7 +24,7 @@
 
 <main>
     {#each articles as article, index}
-        <Article bind:article={articles[index]} />
+        <Article bind:article={articles[index]} users={data.users} />
         {#if index < articles.length - 1}
             <hr />
         {/if}
@@ -33,12 +33,23 @@
 
 <style>
     main {
-        width: 60%;
         overflow-y: scroll;
     }
 
     hr {
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+        main {
+            width: calc(100% - 10px);
+        }
+    }
+
+    @media (min-width: 600px) {
+        main {
+            width: 60%;
+        }
     }
 </style>

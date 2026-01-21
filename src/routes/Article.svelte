@@ -1,7 +1,7 @@
 <script>
     let comment = $state("");
     let commentBox = $state();
-    let { article } = $props();
+    let { article, users } = $props();
 
     async function postComment() {
         article.comments.push({ user: null, text: comment });
@@ -17,7 +17,7 @@
     <div>
         {@html article.content}
         {#each article.comments as comment}
-            <p>{comment.text}</p>
+            <p><strong>{users[comment.user]}</strong>: {comment.text}</p>
         {/each}
         <textarea
             placeholder="Leave a comment..."
@@ -32,11 +32,11 @@
     article {
         display: flex;
         gap: 20px;
+        flex-wrap: wrap;
     }
 
     article img {
-        max-width: 50%;
-        max-height: 80vh;
+        max-width: min(400px, 100%);
         border-radius: 10px;
     }
 
@@ -45,6 +45,13 @@
         flex-direction: column;
         gap: 20px;
         align-items: flex-start;
+    }
+
+    @media (min-width: 600px) {
+        article > div {
+            width: 30%;
+            flex-grow: 1;
+        }
     }
 
     :global(article p) {

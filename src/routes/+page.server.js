@@ -12,5 +12,8 @@ export async function load({ request, cookies }) {
     redirect(307, "/signin");
   }
   let allArticles = await articles.find().sort({ date: -1 }).toArray();
-  return { articles: allArticles };
+  let allUsers = Object.fromEntries(
+    (await users.find().toArray()).map((u) => [u._id, u.name]),
+  );
+  return { articles: allArticles, users: allUsers };
 }
