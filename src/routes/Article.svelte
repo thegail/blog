@@ -58,6 +58,23 @@
             src={article.images[imageIndex].source}
             alt={article.images[imageIndex].alt}
         />
+        {#if article.images.length > 1}
+            <button
+                class="back"
+                onclick={() => (imageIndex -= 1)}
+                disabled={imageIndex === 0}
+            >
+                <span>&lsaquo;</span>
+            </button>
+            <button
+                class="forward"
+                onclick={() => (imageIndex += 1)}
+                disabled={imageIndex === article.images.length - 1}
+            >
+                <span>&rsaquo;</span>
+            </button>
+        {/if}
+        <div class="indicator">{imageIndex + 1} of {article.images.length}</div>
     </div>
     <div>
         <div class="content">
@@ -100,9 +117,59 @@
         justify-content: center;
     }
 
-    article img {
+    .images {
         max-width: min(400px, 100%);
         border-radius: 10px;
+        display: grid;
+        grid-template: 1fr 30px 1fr 21px / 36px 1fr 15px 36px;
+        overflow: hidden;
+    }
+
+    .images img {
+        grid-area: 1 / 1 / 5 / 5;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    button.back {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 15px;
+        margin-left: 6px;
+        grid-area: 2 / 1 / 3 / 2;
+        font-size: 1.3em;
+        line-height: 30px;
+    }
+
+    button.forward {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 15px;
+        margin-right: 6px;
+        grid-area: 2 / 4 / 3 / 4;
+        font-size: 1.3em;
+        line-height: 30px;
+    }
+
+    button.back span,
+    button.forward span {
+        color: var(--primary);
+        position: relative;
+        top: -2px;
+    }
+
+    .indicator {
+        background: var(--secondary);
+        color: var(--primary);
+        font-size: 0.7em;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        grid-area: 4 / 3 / 5 / 5;
+        border-radius: 4px;
+        justify-self: end;
+        padding: 2px;
     }
 
     article > div {
