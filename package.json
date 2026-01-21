@@ -17,6 +17,8 @@
     "vite": "^7.2.6"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.972.0",
+    "@aws-sdk/s3-request-presigner": "^3.972.0",
     "@simplewebauthn/server": "^13.2.2",
     "mongodb": "^7.0.0"
   }

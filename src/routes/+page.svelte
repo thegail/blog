@@ -1,6 +1,4 @@
 <script>
-    import photo1 from "$lib/assets/photo1.jpeg";
-    import photo2 from "$lib/assets/photo2.jpeg";
     import Article from "./Article.svelte";
 
     let { data } = $props();
@@ -13,6 +11,7 @@
             bind:article={articles[index]}
             users={data.users}
             me={data.me}
+            images={data.images}
         />
         {#if index < articles.length - 1}
             <hr />

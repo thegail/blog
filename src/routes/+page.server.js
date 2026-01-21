@@ -1,5 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import { MongoClient } from "mongodb";
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
@@ -15,5 +17,21 @@ export async function load({ request, cookies }) {
   let allUsers = Object.fromEntries(
     (await users.find().toArray()).map((u) => [u._id, u.name]),
   );
-  return { articles: allArticles, users: allUsers, me: user._id };
+  let client = new S3Client({ region: "us-west-1" });
+  let imageRequests = allArticles.flatMap((a) =>
+    a.images.map(async (i) => {
+      let request = new GetObjectCommand({
+        Bucket: "thegail-blog-assets",
+        Key: i.key,
+      });
+      return [i.key, await getSignedUrl(client, request, { expiresIn: 3600 })];
+    }),
+  );
+  let imageURLs = Object.fromEntries(await Promise.all(imageRequests));
+  return {
+    articles: allArticles,
+    users: allUsers,
+    me: user._id,
+    images: imageURLs,
+  };
 }

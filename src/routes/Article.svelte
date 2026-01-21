@@ -1,9 +1,22 @@
 <script>
+    import { fly } from "svelte/transition";
+
     let comment = $state("");
     let commentBox = $state();
-    let { article, users, me } = $props();
+    let { article, users, me, images } = $props();
     let commentLimit = $state(3);
     let imageIndex = $state(0);
+    let flyDirection = $state(1);
+
+    function imageForward() {
+        flyDirection = 1;
+        imageIndex += 1;
+    }
+
+    function imageBack() {
+        flyDirection = -1;
+        imageIndex -= 1;
+    }
 
     async function postComment() {
         if (comment.length === 0) {
@@ -54,21 +67,25 @@
 
 <article>
     <div class="images">
-        <img
-            src={article.images[imageIndex].source}
-            alt={article.images[imageIndex].alt}
-        />
+        {#key imageIndex}
+            <img
+                src={images[article.images[imageIndex].key]}
+                alt={article.images[imageIndex].alt}
+                in:fly={{ x: flyDirection * 400 }}
+                out:fly={{ x: flyDirection * -400 }}
+            />
+        {/key}
         {#if article.images.length > 1}
             <button
                 class="back"
-                onclick={() => (imageIndex -= 1)}
+                onclick={imageBack}
                 disabled={imageIndex === 0}
             >
                 <span>&lsaquo;</span>
             </button>
             <button
                 class="forward"
-                onclick={() => (imageIndex += 1)}
+                onclick={imageForward}
                 disabled={imageIndex === article.images.length - 1}
             >
                 <span>&rsaquo;</span>
@@ -123,12 +140,15 @@
         display: grid;
         grid-template: 1fr 30px 1fr 21px / 36px 1fr 15px 36px;
         overflow: hidden;
+        aspect-ratio: calc(1330 / 2364);
     }
 
     .images img {
         grid-area: 1 / 1 / 5 / 5;
         max-width: 100%;
         object-fit: cover;
+        align-self: center;
+        z-index: -1;
     }
 
     button.back {
