@@ -10,7 +10,9 @@ export async function POST({ request, cookies }) {
   let body = await request.json();
   let id = body.id;
   cookies.set("userId", id, { path: "/" });
-  let challenge = crypto.getRandomValues(new Uint8Array(32)).toHex();
+  let challenge = Buffer.from(
+    crypto.getRandomValues(new Uint8Array(32)),
+  ).toString("hex");
   let result = await users.updateOne(
     { _id: id },
     { $set: { challenge: challenge } },
@@ -42,10 +44,15 @@ export async function PUT({ request, cookies }) {
   if (!verification.verified) {
     error(401, "Verification failed");
   }
-  let token = crypto.getRandomValues(new Uint8Array(32)).toHex();
+  let token = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString(
+    "hex",
+  );
   await users.updateOne(
     { _id: cookies.get("userId") },
-    { $set: { challenge: null }, $push: { tokens: Bun.sha(token).toHex() } },
+    {
+      $set: { challenge: null },
+      $push: { tokens: Buffer.from(Bun.sha(token)).toString("hex") },
+    },
   );
   cookies.set("token", token, { path: "/" });
   return new Response("Ok");

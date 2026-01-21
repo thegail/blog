@@ -14,7 +14,9 @@ export async function POST({ request }) {
     error(401, "Unauthorized");
   }
   let body = await request.json();
-  let id = crypto.getRandomValues(new Uint8Array(4)).toHex();
+  let id = Buffer.from(crypto.getRandomValues(new Uint8Array(4))).toString(
+    "hex",
+  );
   await articles.insertOne({
     _id: id,
     date: new Date().getTime(),

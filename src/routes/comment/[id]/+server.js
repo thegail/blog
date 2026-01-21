@@ -9,7 +9,11 @@ export async function POST({ request, cookies, params }) {
   let text = await request.text();
   let user = await users.findOne({ _id: cookies.get("userId") });
   let token = cookies.get("token");
-  if (!user || !token || !user.tokens.includes(Bun.sha(token).toHex())) {
+  if (
+    !user ||
+    !token ||
+    !user.tokens.includes(Buffer.from(Bun.sha(token)).toString("hex"))
+  ) {
     error(401, "Unauthorized");
   }
   if (text.length > 2000) {
