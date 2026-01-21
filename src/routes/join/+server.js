@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 import { verifyRegistrationResponse } from "@simplewebauthn/server";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
+import { error } from "@sveltejs/kit";
 
 let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
@@ -9,7 +10,7 @@ let users = db.collection("users");
 
 export async function POST({ request, cookies }) {
   let body = await request.json();
-  let hash = Bun.sha(body.code);
+  let hash = Bun.sha(body.code).toHex();
   let result = await codes.updateOne(
     { _id: hash, used: false },
     { $set: { used: true } },
