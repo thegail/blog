@@ -1,6 +1,5 @@
-import { MongoClient } from "mongodb";
+import client from "$lib/client.js";
 
-let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
 let users = db.collection("users");
 

@@ -1,9 +1,8 @@
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
-import { MongoClient } from "mongodb";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { error } from "@sveltejs/kit";
+import client from "$lib/client.js";
 
-let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
 let users = db.collection("users");
 

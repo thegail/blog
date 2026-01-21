@@ -1,7 +1,6 @@
-import { MongoClient } from "mongodb";
 import { error } from "@sveltejs/kit";
+import client from "$lib/client.js";
 
-let client = new MongoClient("mongodb://localhost");
 let db = client.db("blog");
 let articles = db.collection("articles");
 
