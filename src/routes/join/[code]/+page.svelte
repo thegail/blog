@@ -25,7 +25,7 @@
                     { alg: -257, type: "public-key" },
                 ],
                 rp: {
-                    id: "localhost",
+                    id: "blog.thegail.co",
                     name: "Teddy's Photostream",
                 },
                 user: {

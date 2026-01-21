@@ -11,7 +11,7 @@
                 mediation: "silent",
                 publicKey: {
                     challenge: new Uint8Array(32),
-                    rpId: "localhost",
+                    rpId: "blog.thegail.co",
                 },
             });
             let userId = new TextDecoder().decode(
@@ -29,13 +29,18 @@
             let body = await response.json();
             challenge = body.challenge;
         }
-        let credential = await navigator.credentials.get({
-            mediation: "silent",
-            publicKey: {
-                challenge: Uint8Array.fromHex(challenge),
-                rpId: "localhost",
-            },
-        });
+        let credential;
+        try {
+            credential = await navigator.credentials.get({
+                mediation: "silent",
+                publicKey: {
+                    challenge: Uint8Array.fromHex(challenge),
+                    rpId: "blog.thegail.co",
+                },
+            });
+        } catch (error) {
+            alert("Failed to sign in");
+        }
         let response = await fetch("/signin", {
             method: "PUT",
             body: JSON.stringify({ credential }),

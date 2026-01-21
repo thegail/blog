@@ -49,8 +49,8 @@ export async function PUT({ request, cookies }) {
     expectedChallenge: isoBase64URL.fromBuffer(
       Uint8Array.fromHex(user.challenge),
     ),
-    expectedOrigin: "http://localhost:5173",
-    expectedRPID: "localhost",
+    expectedOrigin: "https://blog.thegail.co",
+    expectedRPID: "blog.thegail.co",
   });
   if (!verification.verified) {
     error(401, "Verification failed");
