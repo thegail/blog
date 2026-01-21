@@ -53,11 +53,16 @@
 
 <style>
     main {
-        width: 60%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
+    }
+
+    @media (min-width: 600px) {
+        main {
+            width: 60%;
+        }
     }
 
     p {

@@ -34,6 +34,7 @@
 <style>
     main {
         overflow-y: scroll;
+        padding-bottom: 20px;
     }
 
     hr {

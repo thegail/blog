@@ -41,6 +41,37 @@
     }
 </script>
 
-<main>
-    <button onclick={signIn}>Click to sign in</button>
-</main>
+<button class="invisible" onclick={signIn}>
+    <main>
+        <div class="button">Click to sign in</div>
+    </main>
+</button>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        align-items: center;
+    }
+
+    button.invisible {
+        display: contents;
+        cursor: auto;
+    }
+
+    .button {
+        background: var(--secondary);
+        color: var(--primary);
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        cursor: pointer;
+    }
+</style>
