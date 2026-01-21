@@ -3,11 +3,11 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import client from "$lib/server/client.js";
 
-let db = client.db("blog");
-let users = db.collection("users");
-let articles = db.collection("articles");
-
 export async function load({ request, cookies }) {
+  let db = client().db("blog");
+  let users = db.collection("users");
+  let articles = db.collection("articles");
+
   let user = await users.findOne({ _id: cookies.get("userId") });
   let token = cookies.get("token");
   if (!user || !token || !user.tokens.includes(Bun.sha(token).toHex())) {

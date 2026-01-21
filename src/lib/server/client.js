@@ -1,11 +1,16 @@
 import { MongoClient } from "mongodb";
 import { env } from "$env/dynamic/private";
 
-let client = new MongoClient(env.MONGODB_URI, {
-  appName: "devrel.vercel.integration",
-  maxIdleTimeMS: 5000,
-});
+let clientObject;
 
-// let client = new MongoClient("mongodb://localhost");
+function client() {
+  if (!clientObject) {
+    clientObject = new MongoClient(env.MONGODB_URI, {
+      appName: "devrel.vercel.integration",
+      maxIdleTimeMS: 5000,
+    });
+  }
+  return clientObject;
+}
 
 export default client;

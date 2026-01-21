@@ -1,10 +1,10 @@
 import { error } from "@sveltejs/kit";
 import client from "$lib/server/client.js";
 
-let db = client.db("blog");
-let articles = db.collection("articles");
-
 export async function POST({ request }) {
+  let db = client().db("blog");
+  let articles = db.collection("articles");
+
   if (
     !Bun.password.verify(
       request.headers.get("Authorization"),

@@ -1,11 +1,11 @@
 import { error } from "@sveltejs/kit";
 import client from "$lib/server/client.js";
 
-let db = client.db("blog");
-let users = db.collection("users");
-let articles = db.collection("articles");
-
 export async function POST({ request, cookies, params }) {
+  let db = client().db("blog");
+  let users = db.collection("users");
+  let articles = db.collection("articles");
+
   let text = await request.text();
   let user = await users.findOne({ _id: cookies.get("userId") });
   let token = cookies.get("token");

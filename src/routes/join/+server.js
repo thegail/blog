@@ -3,11 +3,11 @@ import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { error } from "@sveltejs/kit";
 import client from "$lib/server/client.js";
 
-let db = client.db("blog");
-let codes = db.collection("codes");
-let users = db.collection("users");
-
 export async function POST({ request, cookies }) {
+  let db = client().db("blog");
+  let codes = db.collection("codes");
+  let users = db.collection("users");
+
   let body = await request.json();
   let hash = Bun.sha(body.code).toHex();
   let result = await codes.updateOne(
@@ -31,6 +31,10 @@ export async function POST({ request, cookies }) {
 }
 
 export async function PUT({ request, cookies }) {
+  let db = client().db("blog");
+  let codes = db.collection("codes");
+  let users = db.collection("users");
+
   let body = await request.json();
   let user = await users.findOne({ _id: body.id });
   if (!user.challenge) {

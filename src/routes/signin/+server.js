@@ -3,10 +3,10 @@ import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { error } from "@sveltejs/kit";
 import client from "$lib/server/client.js";
 
-let db = client.db("blog");
-let users = db.collection("users");
-
 export async function POST({ request, cookies }) {
+  let db = client().db("blog");
+  let users = db.collection("users");
+
   let body = await request.json();
   let id = body.id;
   cookies.set("userId", id, { path: "/" });
@@ -22,6 +22,9 @@ export async function POST({ request, cookies }) {
 }
 
 export async function PUT({ request, cookies }) {
+  let db = client().db("blog");
+  let users = db.collection("users");
+
   let body = await request.json();
   let user = await users.findOne({ _id: cookies.get("userId") });
   let verification = await verifyAuthenticationResponse({
