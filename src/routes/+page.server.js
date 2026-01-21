@@ -17,14 +17,17 @@ export async function load({ request, cookies }) {
   let allUsers = Object.fromEntries(
     (await users.find().toArray()).map((u) => [u._id, u.name]),
   );
-  let client = new S3Client({ region: "us-west-1" });
+  let awsClient = new S3Client({ region: "us-west-1" });
   let imageRequests = allArticles.flatMap((a) =>
     a.images.map(async (i) => {
       let request = new GetObjectCommand({
         Bucket: "thegail-blog-assets",
         Key: i.key,
       });
-      return [i.key, await getSignedUrl(client, request, { expiresIn: 3600 })];
+      return [
+        i.key,
+        await getSignedUrl(awsClient, request, { expiresIn: 3600 }),
+      ];
     }),
   );
   let imageURLs = Object.fromEntries(await Promise.all(imageRequests));
