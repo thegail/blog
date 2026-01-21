@@ -4,6 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import client from "$lib/server/client.js";
 
 export async function load({ request, cookies }) {
+  console.log(process.versions.bun);
   let db = client().db("blog");
   let users = db.collection("users");
   let articles = db.collection("articles");

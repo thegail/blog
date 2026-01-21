@@ -23,7 +23,6 @@
 
 <header>
     <h1>Teddy&rsquo;s photostream</h1>
-    {JSON.stringify(process.versions)}
 </header>
 
 {@render children()}
