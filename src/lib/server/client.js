@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
-import MONGODB_URI from "$env/dynamic/private";
+import { env } from "$env/dynamic/private";
 
-let client = new MongoClient(MONGODB_URI, {
+let client = new MongoClient(env.MONGODB_URI, {
   appName: "devrel.vercel.integration",
   maxIdleTimeMS: 5000,
 });

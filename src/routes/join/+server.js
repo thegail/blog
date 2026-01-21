@@ -1,7 +1,7 @@
 import { verifyRegistrationResponse } from "@simplewebauthn/server";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { error } from "@sveltejs/kit";
-import client from "$lib/client.js";
+import client from "$lib/server/client.js";
 
 let db = client.db("blog");
 let codes = db.collection("codes");

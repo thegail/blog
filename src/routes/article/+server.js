@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import client from "$lib/client.js";
+import client from "$lib/server/client.js";
 
 let db = client.db("blog");
 let articles = db.collection("articles");
