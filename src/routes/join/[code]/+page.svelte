@@ -6,15 +6,19 @@
     let name = $state("");
 
     async function register() {
-        let response = await (
-            await fetch("/join", {
-                method: "POST",
-                body: JSON.stringify({ name, code: page.params.code }),
-            })
-        ).json();
+        let response = await fetch("/join", {
+            method: "POST",
+            body: JSON.stringify({ name, code: page.params.code }),
+        });
+        if (!response.ok) {
+            let body = await response.json();
+            alert(body.message);
+            return;
+        }
+        let body = await response.json();
         let credential = await navigator.credentials.create({
             publicKey: {
-                challenge: Uint8Array.fromHex(response.challenge),
+                challenge: Uint8Array.fromHex(body.challenge),
                 pubKeyCredParams: [
                     { alg: -7, type: "public-key" },
                     { alg: -8, type: "public-key" },
@@ -25,7 +29,7 @@
                     name: "Teddy's Photostream",
                 },
                 user: {
-                    id: new TextEncoder().encode(response.id),
+                    id: new TextEncoder().encode(body.id),
                     name: name,
                     displayName: name,
                 },
@@ -35,7 +39,7 @@
         await fetch("/join", {
             method: "PUT",
             body: JSON.stringify({
-                id: response.id,
+                id: body.id,
                 credential: credential,
             }),
         });

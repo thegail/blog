@@ -32,8 +32,9 @@
             body: comment,
         });
         if (!response.ok) {
-            let text = await response.text();
-            alert(text);
+            let body = await response.json();
+            alert(body.message);
+            return;
         }
         comment = "";
     }

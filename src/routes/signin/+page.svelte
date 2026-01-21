@@ -17,13 +17,17 @@
             let userId = new TextDecoder().decode(
                 credential.response.userHandle,
             );
-            let response = await (
-                await fetch("/signin", {
-                    method: "POST",
-                    body: JSON.stringify({ id: userId }),
-                })
-            ).json();
-            challenge = response.challenge;
+            let response = await fetch("/signin", {
+                method: "POST",
+                body: JSON.stringify({ id: userId }),
+            });
+            if (!response.ok) {
+                let body = await response.json();
+                alert(body.message);
+                return;
+            }
+            let body = await response.json();
+            challenge = body.challenge;
         }
         let credential = await navigator.credentials.get({
             mediation: "silent",
@@ -32,10 +36,15 @@
                 rpId: "localhost",
             },
         });
-        await fetch("/signin", {
+        let response = await fetch("/signin", {
             method: "PUT",
             body: JSON.stringify({ credential }),
         });
+        if (!response.ok) {
+            let body = await response.json();
+            alert(body.message);
+            return;
+        }
         goto("/");
     }
 </script>
