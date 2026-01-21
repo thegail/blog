@@ -12,7 +12,7 @@ export async function POST({ request, cookies }) {
   cookies.set("userId", id, { path: "/" });
   let challenge = Buffer.from(
     crypto.getRandomValues(new Uint8Array(32)),
-  ).toString("hex");
+  ;
   let result = await users.updateOne(
     { _id: id },
     { $set: { challenge: challenge } },
@@ -51,7 +51,7 @@ export async function PUT({ request, cookies }) {
     { _id: cookies.get("userId") },
     {
       $set: { challenge: null },
-      $push: { tokens: Buffer.from(Bun.sha(token)).toString("hex") },
+      $push: { tokens: Buffer.from(Bun.sha(token) },
     },
   );
   cookies.set("token", token, { path: "/" });

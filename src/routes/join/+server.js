@@ -9,7 +9,7 @@ export async function POST({ request, cookies }) {
   let users = db.collection("users");
 
   let body = await request.json();
-  let hash = Buffer.from(Bun.sha(body.code)).toString("hex");
+  let hash = Buffer.from(Bun.sha(body.code);
   let result = await codes.updateOne(
     { _id: hash, used: false },
     { $set: { used: true } },
@@ -22,7 +22,7 @@ export async function POST({ request, cookies }) {
   );
   let challenge = Buffer.from(
     crypto.getRandomValues(new Uint8Array(32)),
-  ).toString("hex");
+  ;
   await users.insertOne({
     _id: id,
     name: body.name,
@@ -65,13 +65,13 @@ export async function PUT({ request, cookies }) {
       $set: {
         publicKey: Buffer.from(
           verification.registrationInfo.credential.publicKey,
-        ).toString("hex"),
+        ,
         counter: verification.registrationInfo.credential.counter,
         credentialId: verification.registrationInfo.credential.id,
         challenge: null,
       },
       $push: {
-        tokens: Buffer.from(Bun.sha(token)).toString("hex"),
+        tokens: Buffer.from(Bun.sha(token),
       },
     },
   );

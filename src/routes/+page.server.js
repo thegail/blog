@@ -13,7 +13,7 @@ export async function load({ request, cookies }) {
   if (
     !user ||
     !token ||
-    !user.tokens.includes(Buffer.from(Bun.sha(token)).toString("hex"))
+    !user.tokens.includes(Buffer.from(Bun.sha(token))
   ) {
     redirect(307, "/signin");
   }

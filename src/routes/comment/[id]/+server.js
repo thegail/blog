@@ -12,7 +12,7 @@ export async function POST({ request, cookies, params }) {
   if (
     !user ||
     !token ||
-    !user.tokens.includes(Buffer.from(Bun.sha(token)).toString("hex"))
+    !user.tokens.includes(Buffer.from(Bun.sha(token))
   ) {
     error(401, "Unauthorized");
   }
