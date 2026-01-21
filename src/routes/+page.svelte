@@ -4,22 +4,7 @@
     import Article from "./Article.svelte";
 
     let { data } = $props();
-    let articles = $state([
-        {
-            id: "0",
-            image: photo1,
-            content:
-                "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nemo doloremque quasi esse fugiat necessitatibus illum optio dignissimos officiis ex, nulla quis cupiditate! Ipsum amet officia voluptas minima exercitationem reprehenderit.</p>",
-            comments: [],
-        },
-        {
-            id: "1",
-            image: photo2,
-            content:
-                "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nemo doloremque quasi esse fugiat necessitatibus illum optio dignissimos officiis ex, nulla quis cupiditate! Ipsum amet officia voluptas minima exercitationem reprehenderit.</p>",
-            comments: [],
-        },
-    ]);
+    let articles = $state(data.articles);
 </script>
 
 <main>

@@ -11,6 +11,9 @@ export async function POST({ request, cookies, params }) {
   if (!user || !user.tokens.includes(Bun.sha(cookies.get("token")).toHex())) {
     throw new Error("Nope");
   }
+  if (text.length > 2000) {
+    throw new Error("Nope");
+  }
   await articles.updateOne(
     { _id: params.id },
     { $push: { comments: { user: user._id, text } } },

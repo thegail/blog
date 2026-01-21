@@ -80,6 +80,11 @@
         cursor: pointer;
     }
 
+    :global(button:disabled) {
+        opacity: 0.5;
+        cursor: auto;
+    }
+
     @media (prefers-color-scheme: light) {
         :global(:root) {
             --primary: #d0d0d0;
