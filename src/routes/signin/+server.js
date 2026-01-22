@@ -47,7 +47,7 @@ export async function PUT({ request, cookies }) {
     { _id: cookies.get("userId") },
     {
       $set: { challenge: null },
-      $push: { tokens: Bun.sha(token) },
+      $push: { tokens: Bun.sha(token).toHex() },
     },
   );
   cookies.set("token", token, { path: "/" });
