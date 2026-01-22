@@ -27,6 +27,16 @@ export async function PUT({ request, cookies }) {
 
   let body = await request.json();
   let user = await users.findOne({ _id: cookies.get("userId") });
+
+  // LastPass uses improper base64 encoding
+  body.credential.id = body.credential.id
+    .replaceAll("-", "+")
+    .replaceAll("_", "/");
+  body.credential.response.attestationObject =
+    body.credential.response.attestationObject
+      .replaceAll("+", "-")
+      .replaceAll("/", "_");
+
   let verification = await verifyAuthenticationResponse({
     response: body.credential,
     expectedChallenge: isoBase64URL.fromBuffer(
