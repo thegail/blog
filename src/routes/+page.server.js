@@ -2,6 +2,7 @@ import { redirect } from "@sveltejs/kit";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import client from "$lib/server/client.js";
+import { env } from "$env/dynamic/private";
 
 export async function load({ request, cookies }) {
   let db = client().db("blog");
@@ -17,7 +18,10 @@ export async function load({ request, cookies }) {
   let allUsers = Object.fromEntries(
     (await users.find().toArray()).map((u) => [u._id, u.name]),
   );
-  let awsClient = new S3Client({ region: "us-west-1" });
+  let awsClient = new S3Client({
+    region: "us-west-1",
+    credentials: awsCredentialsProvider({ roleArn: env("AWS_ROLE_ARN") }),
+  });
   let imageRequests = allArticles.flatMap((a) =>
     a.images.map(async (i) => {
       let request = new GetObjectCommand({
