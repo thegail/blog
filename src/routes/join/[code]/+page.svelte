@@ -26,7 +26,7 @@
                 ],
                 rp: {
                     id: "blog.thegail.co",
-                    name: "Teddy's Photostream",
+                    name: "Teddy's Blog",
                 },
                 user: {
                     id: new TextEncoder().encode(body.id),

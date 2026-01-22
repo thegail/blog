@@ -40,6 +40,8 @@ export async function PUT({ request, cookies }) {
   if (!user.challenge) {
     error(400, "Missing challenge");
   }
+  // LastPass uses improper base64 encoding
+  body.credential.id = body.credential.rawId;
   console.log(body.credential);
   let verification = await verifyRegistrationResponse({
     response: body.credential,
