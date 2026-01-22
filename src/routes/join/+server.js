@@ -40,6 +40,7 @@ export async function PUT({ request, cookies }) {
   if (!user.challenge) {
     error(400, "Missing challenge");
   }
+  console.log(body.credential);
   let verification = await verifyRegistrationResponse({
     response: body.credential,
     expectedChallenge: isoBase64URL.fromBuffer(
