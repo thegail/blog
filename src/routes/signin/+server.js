@@ -29,14 +29,13 @@ export async function PUT({ request, cookies }) {
   let user = await users.findOne({ _id: cookies.get("userId") });
 
   // LastPass uses improper base64 encoding
-  body.credential.id = body.credential.id
-    .replaceAll("-", "+")
-    .replaceAll("_", "/");
+  body.credential.id = body.credential.rawId;
   body.credential.response.authenticatorData =
     body.credential.response.authenticatorData
       .replaceAll("+", "-")
       .replaceAll("/", "_");
-  body.credential.response.signature = body.credential.response.signature.replaceAll("+", "-")
+  body.credential.response.signature = body.credential.response.signature
+    .replaceAll("+", "-")
     .replaceAll("/", "_");
 
   let verification = await verifyAuthenticationResponse({

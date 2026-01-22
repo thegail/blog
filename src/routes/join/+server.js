@@ -42,9 +42,7 @@ export async function PUT({ request, cookies }) {
   }
 
   // LastPass uses improper base64 encoding
-  body.credential.id = body.credential.id
-    .replaceAll("-", "+")
-    .replaceAll("_", "/");
+  body.credential.id = body.credential.rawId;
   body.credential.response.attestationObject =
     body.credential.response.attestationObject
       .replaceAll("+", "-")
