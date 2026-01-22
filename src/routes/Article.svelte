@@ -7,6 +7,9 @@
     let commentLimit = $state(3);
     let imageIndex = $state(0);
     let flyDirection = $state(1);
+    let maxAspect = $derived(
+        Math.min(...article.images.map((i) => i.width / i.height)),
+    );
 
     function imageForward() {
         flyDirection = 1;
@@ -71,11 +74,13 @@
 </script>
 
 <article>
-    <div class="images">
+    <div class="images" style={{ aspectRatio: maxAspect }}>
         {#key imageIndex}
             <img
                 src={images[article.images[imageIndex].key]}
                 alt={article.images[imageIndex].alt}
+                width={article.images[imageIndex].width}
+                height={article.images[imageIndex].height}
                 in:fly={{ x: flyDirection * 400 }}
                 out:fly={{ x: flyDirection * -400 }}
             />
@@ -145,7 +150,6 @@
         display: grid;
         grid-template: 1fr 30px 1fr 21px / 36px 1fr 15px 36px;
         overflow: hidden;
-        aspect-ratio: calc(1330 / 2364);
     }
 
     .images img {
