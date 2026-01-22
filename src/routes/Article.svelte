@@ -79,8 +79,6 @@
             <img
                 src={images[article.images[imageIndex].key]}
                 alt={article.images[imageIndex].alt}
-                width={article.images[imageIndex].width}
-                height={article.images[imageIndex].height}
                 in:fly={{ x: flyDirection * 400 }}
                 out:fly={{ x: flyDirection * -400 }}
             />
