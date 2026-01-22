@@ -19,7 +19,7 @@ export async function POST({ request }) {
   let key = `${id}.${body.extension}`;
   let client = new S3Client({
     region: "us-west-1",
-    credentials: awsCredentialsProvider({ roleArn: env("AWS_ROLE_ARN") }),
+    credentials: awsCredentialsProvider({ roleArn: env.AWS_ROLE_ARN }),
   });
   let command = new PutObjectCommand({
     Bucket: "thegail-blog-assets",

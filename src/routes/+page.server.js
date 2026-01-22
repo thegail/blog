@@ -20,7 +20,7 @@ export async function load({ request, cookies }) {
   );
   let awsClient = new S3Client({
     region: "us-west-1",
-    credentials: awsCredentialsProvider({ roleArn: env("AWS_ROLE_ARN") }),
+    credentials: awsCredentialsProvider({ roleArn: env.AWS_ROLE_ARN }),
   });
   let imageRequests = allArticles.flatMap((a) =>
     a.images.map(async (i) => {
