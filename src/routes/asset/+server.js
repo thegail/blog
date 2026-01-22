@@ -1,5 +1,6 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { error } from "@sveltejs/kit";
 
 export async function POST({ request }) {
   if (
@@ -14,12 +15,15 @@ export async function POST({ request }) {
   let body = await request.json();
   let id = crypto.getRandomValues(new Uint8Array(8)).toHex();
   let key = `${id}.${body.extension}`;
+  console.log("Building S3 Client...");
   let client = new S3Client({ region: "us-west-1" });
   let command = new PutObjectCommand({
     Bucket: "thegail-blog-assets",
     Key: key,
   });
+  console.log("Getting signed URL...");
   let url = await getSignedUrl(client, command, { expiresIn: 3600 });
+  console.log("Done");
   return new Response(null, {
     status: 201,
     headers: { Location: url },
