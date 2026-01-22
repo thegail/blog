@@ -3,6 +3,7 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import client from "$lib/server/client.js";
 import { env } from "$env/dynamic/private";
+import { awsCredentialsProvider } from "@vercel/oidc-aws-credentials-provider";
 
 export async function load({ request, cookies }) {
   let db = client().db("blog");
