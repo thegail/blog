@@ -36,6 +36,8 @@ export async function PUT({ request, cookies }) {
     body.credential.response.authenticatorData
       .replaceAll("+", "-")
       .replaceAll("/", "_");
+  body.credential.response.signature = body.credential.response.signature.replaceAll("+", "-")
+    .replaceAll("/", "_");
 
   let verification = await verifyAuthenticationResponse({
     response: body.credential,
