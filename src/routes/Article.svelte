@@ -221,6 +221,12 @@
         margin-bottom: 10px;
     }
 
+    :global(article h2) {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1em;
+    }
+
     p.timestamp {
         font-size: 0.8em;
     }
