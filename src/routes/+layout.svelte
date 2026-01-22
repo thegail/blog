@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-    <title>Teddy's photostream</title>
+    <title>Teddy&rsquo;s blog</title>
     <link rel="apple-touch-icon" href={favicon} />
     <link rel="icon" type="image/png" href={favicon} />
     <link rel="mask-icon" href={favicon} color="#202020" />
@@ -22,7 +22,7 @@
 </svelte:head>
 
 <header>
-    <h1>Teddy&rsquo;s photostream</h1>
+    <h1>Teddy&rsquo;s blog</h1>
 </header>
 
 {@render children()}

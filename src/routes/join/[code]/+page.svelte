@@ -49,8 +49,8 @@
 
 <main>
     <p>
-        You may enter a name below which will display next to any comments you
-        post.
+        Please enter your name below. If you choose to post comments, this is
+        the name to which they will be attributed.
     </p>
     <input type="text" placeholder="Your name" bind:value={name} />
     <button onclick={register}>Next</button>
