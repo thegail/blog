@@ -32,8 +32,8 @@ export async function PUT({ request, cookies }) {
   body.credential.id = body.credential.id
     .replaceAll("-", "+")
     .replaceAll("_", "/");
-  body.credential.response.attestationObject =
-    body.credential.response.attestationObject
+  body.credential.response.authenticatorData =
+    body.credential.response.authenticatorData
       .replaceAll("+", "-")
       .replaceAll("/", "_");
 
