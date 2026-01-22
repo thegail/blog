@@ -40,6 +40,7 @@
             });
         } catch (error) {
             alert("Failed to sign in");
+            return;
         }
         let response = await fetch("/signin", {
             method: "PUT",
