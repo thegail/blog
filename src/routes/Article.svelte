@@ -74,7 +74,7 @@
 </script>
 
 <article>
-    <div class="images" style={{ aspectRatio: maxAspect }}>
+    <div class="images" style="aspect-ratio: {maxAspect}">
         {#key imageIndex}
             <img
                 src={images[article.images[imageIndex].key]}
