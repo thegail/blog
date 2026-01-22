@@ -69,6 +69,10 @@
         let date = new Date(timestamp);
         let day = days[date.getDay()];
         let month = months[date.getMonth()];
+        let minuteString =
+            date.getMinutes() < 10
+                ? "0" + String(date.getMinutes())
+                : String(date.getMinutes());
         return `${day}, ${month} ${date.getDate()}, ${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`;
     }
 </script>
