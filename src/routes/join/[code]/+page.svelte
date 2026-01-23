@@ -4,11 +4,18 @@
     import { goto } from "$app/navigation";
 
     let name = $state("");
+    let email = $state("");
 
     async function register() {
+        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            alert(
+                "Your email address appears to be invalid. Please ensure it's typed correctly.",
+            );
+            return;
+        }
         let response = await fetch("/join", {
             method: "POST",
-            body: JSON.stringify({ name, code: page.params.code }),
+            body: JSON.stringify({ name, email, code: page.params.code }),
         });
         if (!response.ok) {
             let body = await response.json();
@@ -53,6 +60,15 @@
         the name to which they will be attributed.
     </p>
     <input type="text" placeholder="Your name" bind:value={name} />
+    <p>
+        If you would like to receive email notifications of new posts, you may
+        enter your email address below.
+    </p>
+    <input
+        type="email"
+        placeholder="Your email (optional)"
+        bind:value={email}
+    />
     <button onclick={register}>Next</button>
 </main>
 
@@ -74,7 +90,8 @@
         margin: 0;
     }
 
-    input[type="text"] {
+    input[type="text"],
+    input[type="email"] {
         background: none;
         border: none;
         border-bottom: 2px solid var(--secondary);

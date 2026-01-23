@@ -22,6 +22,7 @@ export async function POST({ request, cookies }) {
   await users.insertOne({
     _id: id,
     name: body.name,
+    email: body.email,
     code: body.code,
     challenge: challenge,
     tokens: [],
