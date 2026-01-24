@@ -7,7 +7,7 @@
     let email = $state("");
 
     async function register() {
-        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        if (email.length !== 0 && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
             alert(
                 "Your email address appears to be invalid. Please ensure it's typed correctly.",
             );
@@ -15,7 +15,11 @@
         }
         let response = await fetch("/join", {
             method: "POST",
-            body: JSON.stringify({ name, email, code: page.params.code }),
+            body: JSON.stringify({
+                name,
+                email: email.length === 0 ? null : email,
+                code: page.params.code,
+            }),
         });
         if (!response.ok) {
             let body = await response.json();
