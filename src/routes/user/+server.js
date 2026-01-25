@@ -13,9 +13,11 @@ export async function GET({ request }) {
   ) {
     error(401, "Unauthorized");
   }
-  let allUsers = await users
-    .find()
-    .toArray()
-    .map((u) => ({ _id: u._id, email: u.email, name: u.name, code: u.code }));
+  let allUsers = (await users.find().toArray()).map((u) => ({
+    _id: u._id,
+    email: u.email,
+    name: u.name,
+    code: u.code,
+  }));
   return new Response(JSON.stringify(allUsers));
 }
