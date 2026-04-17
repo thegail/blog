@@ -7,7 +7,7 @@
     async function signIn() {
         let challenge = data.challenge;
         if (!challenge) {
-            let userId = window.localStorage.get("userId");
+            let userId = window.localStorage.getItem("userId");
             if (!userId) {
                 let credential = await navigator.credentials.get({
                     mediation: "silent",
@@ -19,7 +19,7 @@
                 let userId = new TextDecoder().decode(
                     credential.response.userHandle,
                 );
-                window.localStorage.set("userId", userId);
+                window.localStorage.setItem("userId", userId);
             }
             let response = await fetch("/signin", {
                 method: "POST",

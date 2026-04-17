@@ -47,7 +47,7 @@
                 attestation: "none",
             },
         });
-        window.localStorage.set("userId", body.id);
+        window.localStorage.setItem("userId", body.id);
         await fetch("/join", {
             method: "PUT",
             body: JSON.stringify({
