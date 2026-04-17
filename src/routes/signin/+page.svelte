@@ -16,7 +16,7 @@
                         rpId: "blog.thegail.co",
                     },
                 });
-                let userId = new TextDecoder().decode(
+                userId = new TextDecoder().decode(
                     credential.response.userHandle,
                 );
                 window.localStorage.setItem("userId", userId);
